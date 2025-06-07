@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova Code Editor Engine.exe</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Tahoma, Verdana, sans-serif;
+      background: #d4d0c8;
+      color: #000;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header, footer {
+      background: linear-gradient(to bottom, #f1f1f1, #c3c3c3);
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #888;
+      font-size: 0.9rem;
+    }
+    nav {
+      display: flex;
+      background: #ece9d8;
+      border-bottom: 2px groove #fff;
+    }
+    nav button {
+      flex: 1;
+      padding: 8px;
+      border: 2px outset #fff;
+      background: #e0dfde;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    nav button.active {
+      background: #c0c0c0;
+      border: 2px inset #fff;
+    }
+    nav button:hover {
+      background: #add8e6; /* light blue on hover */
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+    .tab-content {
+      flex: 1;
+      display: none;
+      border: 2px groove #fff;
+      padding: 10px;
+      background: #fff;
+      overflow: auto;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .editor-container {
+      height: 100%;
+    }
+    textarea, pre {
+      width: 100%;
+      height: 100%;
+      border: 2px inset #ccc;
+      font-family: Consolas, monospace;
+      background: #fff;
+      color: #000;
+      padding: 10px;
+      font-size: 1rem;
+      resize: none;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 2px inset #ccc;
+      background: white;
+    }
+    .loading {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: #d4d0c8;
+    }
+  </style>
+</head>
+<body>
+  <header>Nova Code Editor Engine.exe</header>
+  <main>
+    <div id="loading" class="loading">Setting up novacar engine/code editor... </div>
+    <div id="mainUI" style="display:none; flex:1; flex-direction:column;">
+      <nav>
+        <button id="btn-editor" class="active">Editor</button>
+        <button id="btn-preview">Preview</button>
+        <button id="btn-code">Code</button>
+        <button id="btn-upcoming">Upcoming</button>
+      </nav>
+      <div id="editor" class="tab-content active">
+        <div class="editor-container">
+          <textarea id="code"></textarea>
+        </div>
+      </div>
+      <div id="preview" class="tab-content">
+        <iframe id="previewFrame"></iframe>
+      </div>
+      <div id="codeView" class="tab-content">
+        <pre id="codeOutput"></pre>
+      </div>
+      <div id="upcoming" class="tab-content">
+        <h2>Upcoming</h2>
+        <ul>
+          <li>Python code</li>
+          <li>Nintendo code</li>
+          <li>PlayStation code</li>
+          <li>Unity code</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <footer>build by NOVA studios</footer>
+
+  <script>
+    const loading = document.getElementById('loading');
+    const mainUI = document.getElementById('mainUI');
+    const tabs = {
+      editor: document.getElementById('editor'),
+      preview: document.getElementById('preview'),
+      codeView: document.getElementById('codeView'),
+      upcoming: document.getElementById('upcoming'),
+    };
+    const buttons = {
+      editor: document.getElementById('btn-editor'),
+      preview: document.getElementById('btn-preview'),
+      codeView: document.getElementById('btn-code'),
+      upcoming: document.getElementById('btn-upcoming'),
+    };
+
+    setTimeout(() => {
+      loading.style.display = 'none';
+      mainUI.style.display = 'flex';
+    }, 8000);
+
+    function activateTab(tab) {
+      Object.keys(tabs).forEach(key => {
+        tabs[key].classList.remove('active');
+        buttons[key].classList.remove('active');
+      });
+      tabs[tab].classList.add('active');
+      buttons[tab].classList.add('active');
+
+      if (tab === 'preview') {
+        previewFrame.srcdoc = codeInput.value;
+      }
+      if (tab === 'codeView') {
+        codeOutput.textContent = codeInput.value;
+      }
+    }
+
+    buttons.editor.onclick = () => activateTab('editor');
+    buttons.preview.onclick = () => activateTab('preview');
+    buttons.codeView.onclick = () => activateTab('codeView');
+    buttons.upcoming.onclick = () => activateTab('upcoming');
+
+    const codeInput = document.getElementById('code');
+    const previewFrame = document.getElementById('previewFrame');
+    const codeOutput = document.getElementById('codeOutput');
+
+    const starterCode = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { text-align: center; font-family: Arial; margin-top: 50px; }
+    h1 { color: blue; }
+  </style>
+</head>
+<body>
+  <h1>Hello from the 2000s Wizard!</h1>
+</body>
+</html>`;
+
+    codeInput.value = starterCode;
+  </script>
+</body>
+</html>
